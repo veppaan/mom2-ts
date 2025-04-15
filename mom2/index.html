@@ -13,7 +13,7 @@
 
     <h2>Att göra:</h2>
     <p id="error-txt"></p>
-    <form>
+    <form id="todo-form">
       <label for="todo">Lägg till att-göra uppgift</label>
         <input type="text" id="todo" name="todo" value="Skriv din att-göra...">
         <label for="priority">Prioritet</label>
@@ -24,8 +24,62 @@
         </select>
         <button type="submit">Lägg till</button>
     </form>
-    <section id="all-todos">
-      <h3>Inlagda att-göra uppgifter:</h3>
-    </section>
+    <h3>Inlagda att-göra uppgifter:</h3>
+    <section id="all-todos"></section>
+    <script type="module">
+      import {ToDoList} from "./src/main.ts";
+
+      const todoList = new ToDoList();
+
+      document.getElementById("todo-form").addEventListener("submit", function (event){
+        event.preventDefault();
+
+      //const form = document.getElementById("todo-form");
+        const todoValue = document.getElementById("todo");
+        const priorityValue = document.getElementById("priority");
+
+        console.log(todoValue.value + " " + priorityValue.value);
+
+        const success = todoList.addTodo(todoValue.value, parseInt(priorityValue.value));
+
+        if(success){
+          todoValue.value = "";
+          renderTodo();
+        }else{
+          alert("Fel i inmatning!")
+        }
+        //renderTodo();
+
+      });
+
+      function markCompleted(index) {
+      todoList.markTodoCompleted(index);
+      renderTodo();
+    }
+
+      function renderTodo() {
+        const todoSection = document.getElementById("all-todos");
+
+        todoSection.innerHTML = "";
+
+        todoList.getTodos().forEach((todo, index) => {
+          const liEl = document.createElement("li");
+          liEl.innerHTML = `${todo.task} (Prioritet: ${todo.priority})`;
+
+          if(!todo.completed) {
+            const button = document.createElement("button");
+            button.textContent ="Markera klar";
+            button.onclick = () => {
+              markCompleted(index);
+            };
+            liEl.appendChild(button);
+            todoSection.appendChild(liEl);
+          }
+        });
+      }
+      
+
+
+    </script>
   </body>
 </html>

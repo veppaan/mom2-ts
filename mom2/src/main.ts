@@ -1,12 +1,12 @@
 import './style.css'
 
-interface Todo {
+export interface Todo {
   task: string,
   completed: boolean,
   priority: number
 }
 
-class ToDoList{
+export class ToDoList{
   //array med todo-objekt
   public todos: Todo[] = [];
   //konstruktor, ladda in från localstorage
@@ -25,6 +25,7 @@ class ToDoList{
       priority: priority,
       completed: false
     }
+    console.log(newTodo);
 
     this.todos.push(newTodo);
     this.saveToLocalStorage();
@@ -34,6 +35,7 @@ class ToDoList{
   public markTodoCompleted(todoIndex: number): void{
     if(todoIndex >= 0 && this.todos.length){
       this.todos[todoIndex].completed = true;
+      this.saveToLocalStorage();
     }
   }
 
@@ -53,5 +55,4 @@ class ToDoList{
       this.todos = JSON.parse(storagedTodos);
     }
   }
-
 }
