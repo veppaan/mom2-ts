@@ -16,19 +16,33 @@ export class ToDoList{
   }
 
   public addTodo(task: string, priority: number): boolean{
-    if(task !== "" && priority !== 1 && priority !== 2 && priority !== 3){
-      return false;
+    let correctPriority = false;
+    let correctText = false;
+    if(priority !== 1 && priority !== 2 && priority !== 3){
+      alert("Använd en giltig prioritet!");
+      correctPriority = false;
+    }else{
+      correctPriority = true;
     }
-    //Nytt objekt med todos interface
-    const newTodo: Todo = {
-      task: task,
-      priority: priority,
-      completed: false
+    if(task === ""){
+      alert("Skriv in en giltig text!");
+      correctText = false;
+    }else{
+      correctText = true;
     }
-    console.log(newTodo);
 
-    this.todos.push(newTodo);
-    this.saveToLocalStorage();
+    if(correctText && correctPriority){
+       //Nytt objekt med todos interface
+      const newTodo: Todo = {
+        task: task,
+        priority: priority,
+        completed: false
+      }
+      console.log(newTodo);
+
+      this.todos.push(newTodo);
+      this.saveToLocalStorage();
+    }
     return true;
   }
   //Funktion för att visa om en att-göra är avklarad

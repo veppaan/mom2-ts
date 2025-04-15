@@ -15,7 +15,7 @@
     <p id="error-txt"></p>
     <form id="todo-form">
       <label for="todo">Lägg till att-göra uppgift</label>
-        <input type="text" id="todo" name="todo" value="Skriv din att-göra...">
+        <input type="text" id="todo" name="todo">
         <label for="priority">Prioritet</label>
         <select id="priority">
           <option value="1">Hög</option>
@@ -30,6 +30,8 @@
       import {ToDoList} from "./src/main.ts";
 
       const todoList = new ToDoList();
+
+      renderTodo();
 
       document.getElementById("todo-form").addEventListener("submit", function (event){
         event.preventDefault();
