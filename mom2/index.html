@@ -22,7 +22,7 @@
           <option value="2">Mellan</option>
           <option value="3">Låg</option>
         </select>
-        <button type="submit">Lägg till</button>
+        <button id="add-btn" type="submit">Lägg till</button>
     </form>
     <div id="all-section">
     <h3>Inlagda att-göra uppgifter:</h3>
@@ -52,8 +52,6 @@
         }else{
           alert("Fel i inmatning!")
         }
-        //renderTodo();
-
       });
 
       function markCompleted(index) {
@@ -73,6 +71,7 @@
           if(!todo.completed) {
             const button = document.createElement("button");
             button.textContent ="Markera klar";
+            button.id="done-btn";
             button.onclick = () => {
               markCompleted(index);
             };

@@ -108,6 +108,16 @@ body{
   padding: 1em 2em;
   border-radius: 6px;
 }
+#add-btn{
+  color: white;
+  background-color: green;
+  margin: 1em 1em;
+}
+#done-btn{
+  color: green;
+  background-color: white;
+  margin: 0.2em 1em;
+}
 input[type=text]{
   width: 100%;
   border: 1px solid #ddd;
