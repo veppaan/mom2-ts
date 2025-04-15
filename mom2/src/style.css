@@ -128,3 +128,10 @@ form{
   display: flex;
   flex-direction: column;
 }
+h1{
+  font-size: 2em;
+  font-weight: 600;
+}
+h2{
+  font-weight: 600;
+}
