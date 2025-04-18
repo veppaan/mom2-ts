@@ -1,7 +1,6 @@
 Gjord av Vera Kippel veki2400 
 
 Detta är Moment 2 i Programmering i TypeScript
-
 Jag har följt uppgiftsbeskrivningen där jag skapat interface, klass och funktioner.
 
 Interface innehåller task, completed och priority.
