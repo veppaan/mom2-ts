@@ -1,6 +1,6 @@
-Detta är Moment 2 i Programmering i TypeScript
+Gjord av Vera Kippel veki2400 
 
-Gjord av Vera Kippel veki2400
+Detta är Moment 2 i Programmering i TypeScript
 
 Jag har följt uppgiftsbeskrivningen där jag skapat interface, klass och funktioner.
 
