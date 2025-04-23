@@ -28,58 +28,5 @@
     <h3>Inlagda att-göra uppgifter:</h3>
     <section id="all-todos"></section>
   </div>
-    <script type="module">
-      import {ToDoList} from "./src/main.ts";
-
-      const todoList = new ToDoList();
-
-      renderTodo();
-
-      document.getElementById("todo-form").addEventListener("submit", function (event){
-        event.preventDefault();
-
-      //const form = document.getElementById("todo-form");
-        const todoValue = document.getElementById("todo");
-        const priorityValue = document.getElementById("priority");
-
-        console.log(todoValue.value + " " + priorityValue.value);
-
-        const success = todoList.addTodo(todoValue.value, parseInt(priorityValue.value));
-
-        if(success){
-          todoValue.value = "";
-          renderTodo();
-        }else{
-          alert("Fel i inmatning!")
-        }
-      });
-
-      function markCompleted(index) {
-      todoList.markTodoCompleted(index);
-      renderTodo();
-    }
-
-      function renderTodo() {
-        const todoSection = document.getElementById("all-todos");
-
-        todoSection.innerHTML = "";
-
-        todoList.getTodos().forEach((todo, index) => {
-          const liEl = document.createElement("li");
-          liEl.innerHTML = `${todo.task} (Prioritet: ${todo.priority})`;
-
-          if(!todo.completed) {
-            const button = document.createElement("button");
-            button.textContent ="Markera klar";
-            button.id="done-btn";
-            button.onclick = () => {
-              markCompleted(index);
-            };
-            liEl.appendChild(button);
-            todoSection.appendChild(liEl);
-          }
-        });
-      }
-    </script>
   </body>
 </html>

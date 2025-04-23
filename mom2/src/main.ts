@@ -1,72 +1,54 @@
 import './style.css';
 
-export interface Todo {
-  task: string,
-  completed: boolean,
-  priority: number
-}
+import {ToDoList} from "./toDoClass.ts";
 
-export class ToDoList{
-  //array med todo-objekt
-  public todos: Todo[] = [];
-  //konstruktor, ladda in från localstorage
-  constructor(){
-    this.todos = [],
-    this.loadFromLocalStorge();
-  }
+      const todoList = new ToDoList();
 
-  public addTodo(task: string, priority: number): boolean{
-    let correctPriority = false;
-    let correctText = false;
-    if(priority !== 1 && priority !== 2 && priority !== 3){
-      alert("Använd en giltig prioritet!");
-      correctPriority = false;
-    }else{
-      correctPriority = true;
+      renderTodo();
+
+      const toDoForm = document.getElementById("todo-form") as HTMLFormElement;
+      toDoForm.addEventListener("submit", function (event){
+        event.preventDefault();
+
+      //const form = document.getElementById("todo-form");
+        const todoValue = document.getElementById("todo") as HTMLInputElement;
+        const priorityValue = document.getElementById("priority") as HTMLSelectElement;
+
+        console.log(todoValue.value + " " + priorityValue.value);
+
+        const success = todoList.addTodo(todoValue.value, parseInt(priorityValue.value));
+
+        if(success){
+          todoValue.value = "";
+          renderTodo();
+        }else{
+          alert("Fel i inmatning!")
+        }
+      });
+
+      function markCompleted(index: number) {
+      todoList.markTodoCompleted(index);
+      renderTodo();
     }
-    if(task === ""){
-      alert("Skriv in en giltig text!");
-      correctText = false;
-    }else{
-      correctText = true;
-    }
 
-    if(correctText && correctPriority){
-       //Nytt objekt med todos interface
-      const newTodo: Todo = {
-        task: task,
-        priority: priority,
-        completed: false
+      function renderTodo() {
+        const todoSection = document.getElementById("all-todos") as HTMLElement;
+
+        todoSection.innerHTML = "";
+
+        todoList.getTodos().forEach((todo, index) => {
+          const liEl = document.createElement("li");
+          liEl.innerHTML = `${todo.task} (Prioritet: ${todo.priority})`;
+
+          if(!todo.completed) {
+            const button = document.createElement("button");
+            button.textContent ="Markera klar";
+            button.id="done-btn";
+            button.onclick = () => {
+              markCompleted(index);
+            };
+            liEl.appendChild(button);
+            todoSection.appendChild(liEl);
+          }
+        });
       }
-      console.log(newTodo);
-
-      this.todos.push(newTodo);
-      this.saveToLocalStorage();
-    }
-    return true;
-  }
-  //Funktion för att visa om en att-göra är avklarad
-  public markTodoCompleted(todoIndex: number): void{
-    if(todoIndex >= 0 && this.todos.length){
-      this.todos[todoIndex].completed = true;
-      this.saveToLocalStorage();
-    }
-  }
-
-  //Hämta alla todos
-  getTodos(): Todo[]{
-    return this.todos;
-  }
-
-  //Sparar till localstorage
-  public saveToLocalStorage(): void{
-    localStorage.setItem("todos", JSON.stringify(this.todos));
-  }
-  //Läser in från localstorage
-  public loadFromLocalStorge(): void{
-    const storagedTodos = localStorage.getItem("todos");
-    if(storagedTodos){
-      this.todos = JSON.parse(storagedTodos);
-    }
-  }
-}
